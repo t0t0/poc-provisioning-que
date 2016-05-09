@@ -1,8 +1,0 @@
-{
-  Messages: [{
-      Body: "{\"Records\": [{\"eventVersion\": \"2.0\", \"eventTime\": \"1970-01-01T00:00:00.000Z\", \"requestParameters\": {\"sourceIPAddress\": \"127.0.0.1\"}, \"s3\": {\"configurationId\": \"testConfigRule\", \"object\": {\"eTag\": \"0123456789abcdef0123456789abcdef\", \"key\": \"HappyFace.jpg\", \"sequencer\": \"0A1B2C3D4E5F678901\", \"size\": 1024}, \"bucket\": {\"ownerIdentity\": {\"principalId\": \"EXAMPLE\"}, \"name\": \"sourcebucket\", \"arn\": \"arn:aws:s3:::mybucket\"}, \"s3SchemaVersion\": \"1.0\"}, \"responseElements\": {\"x-amz-id-2\": \"EXAMPLE123/5678abcdefghijklambdaisawesome/mnopqrstuvwxyzABCDEFGH\", \"x-amz-request-id\": \"EXAMPLE123456789\"}, \"awsRegion\": \"us-east-1\", \"eventName\": \"ObjectCreated:Put\", \"userIdentity\": {\"principalId\": \"EXAMPLE\"}, \"eventSource\": \"aws:s3\"}]}",
-      MD5OfBody: "1f3b88d44693b844a972cf8aca868c45",
-      MessageId: "ee5c119b-f3c0-480c-9044-0d81613ecd6d",
-      ReceiptHandle: "AQEBCFVFyTPMBZnqg9abHsGvcegybzWXBr698K1ERA6hO7sBZ6PijKTyn6gUJFWb1eiKMIZXcx4jAV0QT4QSX4nGBXlLV05w65KDRKcMrqS6wgxgE17CTponJpxsE4KYX9bFAqPvTY+hc7+9iM4uIyq9fFVMi4ND5mNX8wEsn8dRHN9pIlcvTeS0ZtSXlBj+aNU1EYhQSirMbL2qkOQd7qxqTOB4bj+MrCHPdaePDMjun9cPq/nKrCRBp23/NFvUG46oY4IBOE6Nn+3dZ5UO8BHvClZkIrUOHemskmjkCI3m4AcoPG9Qv1JfALvFrAoo8uXrvoL1fFGMnjDLa1PAHQqOTe+Ugqu+drgL1tJX/ZSMKsqcUN8HNFz85dPxPPJQVNC4PAktOyjVXiqIySXwRkRf3w=="
-    }]
-}
