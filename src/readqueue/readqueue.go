@@ -9,7 +9,7 @@ import (
 )
 
 
-func readqueue() {
+func main() {
 	svc := sqs.New(session.New())
 
 params := &sqs.ListQueuesInput{
