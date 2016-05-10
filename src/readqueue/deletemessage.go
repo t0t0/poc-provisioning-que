@@ -16,7 +16,7 @@ func deleteMessage(r string, q string) {
 		QueueUrl:      aws.String(q), // Required
 		ReceiptHandle: aws.String(r), // Required
 	}
-	resp, err := svc.DeleteMessage(params)
+	_, err := svc.DeleteMessage(params)
 
 	if err != nil {
 		// Print the error, cast err to awserr.Error to get the Code and
@@ -26,6 +26,6 @@ func deleteMessage(r string, q string) {
 	}
 
 	// Pretty-print the response data.
-	fmt.Println(resp)
+	fmt.Println("Message deleted from " + q)
 
 }

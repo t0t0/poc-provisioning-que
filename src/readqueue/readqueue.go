@@ -13,10 +13,10 @@ import (
 )
 
 func main() {
-	getMessage()
+	timer()
 }
 
-func getMessage() {
+func getMessages() {
 	svc := sqs.New(session.New())
 
 	params := &sqs.ReceiveMessageInput{
@@ -25,11 +25,12 @@ func getMessage() {
 			aws.String("QueueAttributeName"), // Required
 			// More values...
 		},
-		MaxNumberOfMessages: aws.Int64(10),
+		MaxNumberOfMessages: aws.Int64(1),
 		MessageAttributeNames: []*string{
 			aws.String(""), // Required
 			// More values...
 		},
+		WaitTimeSeconds: aws.Int64(10),
 	}
 
 	resp, err := svc.ReceiveMessage(params)
@@ -45,7 +46,7 @@ func getMessage() {
 	for i := 0; i < len(l); i++ {
 		v := l[i].Body
 		handler := l[i].ReceiptHandle
-		fmt.Println(*v)
+		fmt.Println("Message received:" + *v)
 		getFile(*v, *handler)
 	}
 
@@ -73,25 +74,3 @@ func getFile(key string, handler string) {
 	deleteMessage(handler, "https://sqs.us-east-1.amazonaws.com/659527370395/provision-queue")
 
 }
-
-// func deleteMessage(r string, q string) {
-
-// 	svc := sqs.New(session.New())
-
-// 	params := &sqs.DeleteMessageInput{
-// 	QueueUrl:      aws.String(q), // Required
-// 	ReceiptHandle: aws.String(r), // Required
-// }
-// resp, err := svc.DeleteMessage(params)
-
-// if err != nil {
-// 	// Print the error, cast err to awserr.Error to get the Code and
-// 	// Message from an error.
-// 	fmt.Println(err.Error())
-// 	return
-// }
-
-// // Pretty-print the response data.
-// fmt.Println(resp)
-
-// }
