@@ -1,22 +1,30 @@
 package main
 
 import (
-	"github.com/aws/aws-sdk-go/service/sqs"
+	"fmt"
 	"github.com/aws/aws-sdk-go/aws"
 	"github.com/aws/aws-sdk-go/aws/session"
-	"fmt"
+	"github.com/aws/aws-sdk-go/service/sns"
 )
 
 func subscribe(topic_arn string, sqs_arn string) {
-	
-var params = {
-  Protocol: "sqs", /* required */
-  TopicArn: topic_arn, /* required */
-  Endpoint: sqs_arn
-};
-sns.subscribe(params, function(err, data) {
-  if (err) console.log(err, err.stack); // an error occurred
-  else     console.log(data);           // successful response
-});
-}
 
+	svc := sns.New(session.New())
+
+	params := &sns.SubscribeInput{
+		Protocol: aws.String("sqs"),     // Required
+		TopicArn: aws.String(topic_arn), // Required
+		Endpoint: aws.String(sqs_arn),
+	}
+	resp, err := svc.Subscribe(params)
+
+	if err != nil {
+		// Print the error, cast err to awserr.Error to get the Code and
+		// Message from an error.
+		fmt.Println(err.Error())
+		return
+	}
+
+	// Pretty-print the response data.
+	fmt.Println(resp)
+}
