@@ -5,8 +5,8 @@ import (
 	"time"
 )
 
-func timer() {
-	ticker := time.NewTicker(time.Millisecond * 500)
+func readqueue() {
+	ticker := time.NewTicker(time.Second * 2)
 	for t := range ticker.C {
 		fmt.Println("Tick 1 at", time.Now())
 		getMessages()
