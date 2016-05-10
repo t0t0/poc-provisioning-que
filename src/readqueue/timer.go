@@ -6,7 +6,7 @@ import (
 )
 
 func timer() {
-	ticker := time.NewTicker(time.Second * 2)
+	ticker := time.NewTicker(time.Millisecond * 500)
 	for t := range ticker.C {
 		fmt.Println("Tick 1 at", time.Now())
 		getMessages()

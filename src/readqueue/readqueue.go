@@ -13,9 +13,8 @@ import (
 )
 
 func main() {
-	attachQueue()
-	getMessage()
-	timer()
+	fmt.Println(createQueu(test))
+	//timer()
 }
 
 func getMessages() {
@@ -32,7 +31,7 @@ func getMessages() {
 			aws.String(""), // Required
 			// More values...
 		},
-		WaitTimeSeconds: aws.Int64(10),
+		WaitTimeSeconds: aws.Int64(20),
 	}
 
 	resp, err := svc.ReceiveMessage(params)
