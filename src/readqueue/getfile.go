@@ -11,9 +11,10 @@ import (
 	"github.com/aws/aws-sdk-go/service/s3/s3manager"
 )
 
-func getFile(key string, handler string) {
+func getFile(key string, handler string, queueUrl string) {
 	path := "tmp/"
 	location := path + key
+
 	file, err := os.Create(location)
 	if err != nil {
 		log.Fatal("Failed to create file", err)
@@ -30,6 +31,6 @@ func getFile(key string, handler string) {
 		return
 	}
 	fmt.Println("Downloaded file", file.Name(), numBytes, "bytes")
-	deleteMessage(handler, "https://sqs.us-east-1.amazonaws.com/659527370395/provision-queue")
+	deleteMessage(handler, queueUrl)
 
 }

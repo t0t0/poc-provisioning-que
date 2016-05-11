@@ -1,17 +1,17 @@
 package main
 
 import (
-	"fmt"
+	// "fmt"
 	"time"
 )
 
-func readqueue() {
+func readqueue(queueUrl string) {
 	ticker := time.NewTicker(time.Second * 2)
-	for t := range ticker.C {
-		fmt.Println("Tick 1 at", time.Now())
-		getMessages()
-		fmt.Println("Tick 2 at", time.Now())
-		fmt.Println("Tick T at", t)
+	for range ticker.C {
+		// fmt.Println("Tick 1 at", time.Now())
+		getMessages(queueUrl)
+		// fmt.Println("Tick 2 at", time.Now())
+		// fmt.Println("Tick T at", t)
 	}
 
 }

@@ -8,13 +8,13 @@ import (
 	"github.com/aws/aws-sdk-go/service/sqs"
 )
 
-func deleteMessage(r string, q string) {
+func deleteMessage(handler string, queueUrl string) {
 
 	svc := sqs.New(session.New())
 
 	params := &sqs.DeleteMessageInput{
-		QueueUrl:      aws.String(q), // Required
-		ReceiptHandle: aws.String(r), // Required
+		QueueUrl:      aws.String(queueUrl), // Required
+		ReceiptHandle: aws.String(handler),  // Required
 	}
 	_, err := svc.DeleteMessage(params)
 
@@ -26,6 +26,6 @@ func deleteMessage(r string, q string) {
 	}
 
 	// Pretty-print the response data.
-	fmt.Println("Message deleted from " + q)
+	fmt.Println("Message deleted from " + queueUrl)
 
 }
