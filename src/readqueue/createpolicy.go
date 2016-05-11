@@ -25,7 +25,7 @@ type Policy struct {
 	} `json:"Statement"`
 }
 
-func createPolicy() *json {
+func createPolicy(sqs_arn string, sns_arn string) *json {
 
 	resp := &Policy{
 		Version: "2008-10-17",
@@ -36,10 +36,10 @@ func createPolicy() *json {
 				AWS: "*",
 			},
 			Action:   "SQS:SendMessage",
-			Resource: "arn:aws:sqs:us-east-1:659527370395:*",
+			Resource: sqs_arn,
 			Condition: {
 				ArnLike: {
-					AwsSourceArn: "arn:aws:sns:*:*:provision",
+					AwsSourceArn: sns_arn,
 				},
 			},
 		},
