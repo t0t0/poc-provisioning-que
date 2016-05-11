@@ -1,6 +1,9 @@
 package main
 
-import "encoding/json"
+import (
+	"encoding/json"
+	"fmt"
+)
 
 type Config struct {
 	Region   string `json:"Region"`
@@ -8,5 +11,7 @@ type Config struct {
 }
 
 func readConfig() {
+	fmt.Println(Config.Region)
+	fmt.Println(Config.SnsQueue)
 
 }
