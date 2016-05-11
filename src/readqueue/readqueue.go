@@ -4,12 +4,13 @@ import (
 // "fmt"
 )
 
-const sns_arn = "arn:aws:sns:us-east-1:659527370395:provision"
-
 func main() {
-	queue := createQueue("toon", sns_arn)
+	config := openConfig()
+	sns_arn := generateSnsArn(config)
+	sqs_arn := generateSqsArn(config)
+	createQueue(sqs_arn, sns_arn, config)
 	// fmt.Println("na createque")
-	sqs_arn := getQueueArn(*queue.QueueUrl)
+	// sqs_arn := getQueueArn(*queue.QueueUrl)
 	// fmt.Println("na getqueuearn")
 	//getQueuePolicy(*queue.QueueUrl)
 	subscribe(sqs_arn, sns_arn)

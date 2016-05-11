@@ -11,7 +11,7 @@ import (
 	"github.com/aws/aws-sdk-go/service/sqs"
 )
 
-func createQueue(queueName string, sns_arn string) *sqs.CreateQueueOutput {
+func createQueue(sqs_arn string, sns_arn string, config Config) *sqs.CreateQueueOutput {
 
 	svc := sqs.New(session.New())
 	// file, e := ioutil.ReadFile("./output.json")
@@ -21,7 +21,7 @@ func createQueue(queueName string, sns_arn string) *sqs.CreateQueueOutput {
 	// 	os.Exit(1)
 	// }
 
-	json, e := createPolicy("arn:aws:sqs:us-east-1:659527370395:"+queueName, sns_arn)
+	json, e := createPolicy(sqs_arn, sns_arn)
 
 	if e != nil {
 		// Print the error, cast err to awserr.Error to get the Code and
@@ -31,7 +31,7 @@ func createQueue(queueName string, sns_arn string) *sqs.CreateQueueOutput {
 	}
 
 	params := &sqs.CreateQueueInput{
-		QueueName: aws.String(queueName),
+		QueueName: aws.String(config.SqsQueue),
 		Attributes: map[string]*string{
 			"Policy": aws.String(string(json)),
 		}, // Required
@@ -46,7 +46,7 @@ func createQueue(queueName string, sns_arn string) *sqs.CreateQueueOutput {
 	}
 
 	// Pretty-print the response data.
-	fmt.Println("Queue created: " + queueName)
+	fmt.Println("Queue created: " + sqs_arn)
 	return resp
 }
 
