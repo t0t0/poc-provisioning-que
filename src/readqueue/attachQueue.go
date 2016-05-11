@@ -29,7 +29,6 @@ func createQueue(queueName string, sns_arn string) *sqs.CreateQueueOutput {
 		fmt.Println(e.Error())
 		return nil
 	}
-	fmt.Println(string(json))
 
 	params := &sqs.CreateQueueInput{
 		QueueName: aws.String(queueName),
@@ -47,6 +46,7 @@ func createQueue(queueName string, sns_arn string) *sqs.CreateQueueOutput {
 	}
 
 	// Pretty-print the response data.
+	fmt.Println("Queue created: " + queueName)
 	return resp
 }
 

@@ -24,7 +24,7 @@ func subscribe(sqs_arn string, topic_arn string) {
 		fmt.Println(e.Error())
 		return
 	}
-
+	fmt.Println("Queue subscribed to SNS")
 	vars := &sns.SetSubscriptionAttributesInput{
 		AttributeName:   aws.String("RawMessageDelivery"), // Required
 		SubscriptionArn: aws.String(*arn.SubscriptionArn), // Required
@@ -39,4 +39,5 @@ func subscribe(sqs_arn string, topic_arn string) {
 		fmt.Println(err.Error())
 		return
 	}
+	fmt.Println("Raw message delivery enabled")
 }
