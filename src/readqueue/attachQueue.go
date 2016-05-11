@@ -3,6 +3,8 @@ package main
 import (
 	//"encoding/json"
 	"fmt"
+	"io/ioutil"
+	"os"
 
 	"github.com/aws/aws-sdk-go/aws"
 	"github.com/aws/aws-sdk-go/aws/session"
@@ -12,12 +14,18 @@ import (
 func createQueue(queueName string) *sqs.CreateQueueOutput {
 
 	svc := sqs.New(session.New())
+	file, e := ioutil.ReadFile("./output.json")
+
+	if e != nil {
+		fmt.Printf("File error: %v\n", e)
+		os.Exit(1)
+	}
 
 	params := &sqs.CreateQueueInput{
 		QueueName: aws.String(queueName),
-		// Attributes: map[string]*string{
-		// 	"Policy": aws.String("SNS-to-SQS"),
-		// }, // Required
+		Attributes: map[string]*string{
+			"Policy": aws.String(string(file)),
+		}, // Required
 	}
 	resp, err := svc.CreateQueue(params)
 

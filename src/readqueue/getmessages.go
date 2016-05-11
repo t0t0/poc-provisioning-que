@@ -7,11 +7,11 @@ import (
 	"github.com/aws/aws-sdk-go/service/sqs"
 )
 
-func getMessages() {
+func getMessages(queueUrl string) {
 	svc := sqs.New(session.New())
 
 	params := &sqs.ReceiveMessageInput{
-		QueueUrl: aws.String("https://sqs.us-east-1.amazonaws.com/659527370395/provision-queue"), // Required
+		QueueUrl: aws.String(queueUrl), // Required
 		AttributeNames: []*string{
 			aws.String("QueueAttributeName"), // Required
 			// More values...
@@ -21,7 +21,8 @@ func getMessages() {
 			aws.String(""), // Required
 			// More values...
 		},
-		WaitTimeSeconds: aws.Int64(10),
+		WaitTimeSeconds:   aws.Int64(10),
+		VisibilityTimeout: aws.Int64(1),
 	}
 
 	resp, err := svc.ReceiveMessage(params)
@@ -38,7 +39,7 @@ func getMessages() {
 		v := l[i].Body
 		handler := l[i].ReceiptHandle
 		fmt.Println("Message received:" + *v)
-		getFile(*v, *handler)
+		getFile(*v, *handler, queueUrl)
 	}
 
 }

@@ -16,7 +16,22 @@ func subscribe(topic_arn string, sqs_arn string) {
 		TopicArn: aws.String(topic_arn), // Required
 		Endpoint: aws.String(sqs_arn),
 	}
-	resp, err := svc.Subscribe(params)
+	arn, e := svc.Subscribe(params)
+
+	if e != nil {
+		// Print the error, cast err to awserr.Error to get the Code and
+		// Message from an error.
+		fmt.Println(e.Error())
+		return
+	}
+
+	vars := &sns.SetSubscriptionAttributesInput{
+		AttributeName:   aws.String("RawMessageDelivery"), // Required
+		SubscriptionArn: aws.String(*arn.SubscriptionArn), // Required
+		AttributeValue:  aws.String("true"),
+	}
+
+	_, err := svc.SetSubscriptionAttributes(vars)
 
 	if err != nil {
 		// Print the error, cast err to awserr.Error to get the Code and
@@ -24,7 +39,4 @@ func subscribe(topic_arn string, sqs_arn string) {
 		fmt.Println(err.Error())
 		return
 	}
-
-	// Pretty-print the response data.
-	fmt.Println(resp)
 }
