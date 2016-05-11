@@ -7,7 +7,7 @@ import (
 	"github.com/aws/aws-sdk-go/service/sns"
 )
 
-func subscribe(topic_arn string, sqs_arn string) {
+func subscribe(sqs_arn string, topic_arn string) {
 
 	svc := sns.New(session.New())
 
