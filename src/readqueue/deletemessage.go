@@ -4,13 +4,12 @@ import (
 	"fmt"
 
 	"github.com/aws/aws-sdk-go/aws"
-	"github.com/aws/aws-sdk-go/aws/session"
 	"github.com/aws/aws-sdk-go/service/sqs"
 )
 
 func deleteMessage(handler string, queueUrl string) {
 
-	svc := sqs.New(session.New())
+	svc := sqs.New(ses)
 
 	params := &sqs.DeleteMessageInput{
 		QueueUrl:      aws.String(queueUrl), // Required

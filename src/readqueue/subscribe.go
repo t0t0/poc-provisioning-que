@@ -3,13 +3,12 @@ package main
 import (
 	"fmt"
 	"github.com/aws/aws-sdk-go/aws"
-	"github.com/aws/aws-sdk-go/aws/session"
 	"github.com/aws/aws-sdk-go/service/sns"
 )
 
 func subscribe(sqs_arn string, topic_arn string) {
 
-	svc := sns.New(session.New())
+	svc := sns.New(ses)
 
 	params := &sns.SubscribeInput{
 		Protocol: aws.String("sqs"),     // Required

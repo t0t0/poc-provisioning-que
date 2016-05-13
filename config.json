@@ -3,5 +3,22 @@
     "Sns_topic": "provision",
     "Environment": "staging",
     "ID": "659527370395",
-    "Sqs_queue" : "test"
+    "Sqs_queue" : "test",
+    "containers" : [
+     {
+    		"config" : [ "nginx.conf"],
+            "templates" : [ "default.tmpl", "datadog.conf.tmpl" ],
+			"image" : "nginx",
+			"count" : "1",
+			"name" : "nginx"
+     },
+     {
+     	    "config" : [ "apache.conf"],
+			"image" : "nginx",
+			"count" : "1",
+			"name" : "apache"
+     }
+    ],
+    "configdir" : "/home/core/config",
+    "templatesdir" : "home/core/templates"
 }
