@@ -2,7 +2,7 @@ package main
 
 func generateSnsArn(config Config) string {
 
-	return "arn:aws:sns:" + config.Region + ":" + config.ID + ":" + config.Snstopic
+	return "arn:aws:sns:" + config.Region + ":" + config.ID + ":" + config.SnsTopic
 
 }
 

@@ -7,13 +7,13 @@ import (
 	// "os"
 
 	"github.com/aws/aws-sdk-go/aws"
-	"github.com/aws/aws-sdk-go/aws/session"
+	"github.com/aws/aws-sdk-go/aws/client"
 	"github.com/aws/aws-sdk-go/service/sqs"
 )
 
-func createQueue(sqs_arn string, sns_arn string, config Config) *sqs.CreateQueueOutput {
+func createQueue(sqs_arn string, sns_arn string) *sqs.CreateQueueOutput {
 
-	svc := sqs.New(session.New())
+	svc := sqs.New(ses)
 	// file, e := ioutil.ReadFile("./output.json")
 
 	// if e != nil {
@@ -50,8 +50,8 @@ func createQueue(sqs_arn string, sns_arn string, config Config) *sqs.CreateQueue
 	return resp
 }
 
-func getQueueArn(queueUrl string) string {
-	svc := sqs.New(session.New())
+func getQueueArn(queueUrl string, session client.ConfigProvider) string {
+	svc := sqs.New(ses)
 
 	params := &sqs.GetQueueAttributesInput{
 		QueueUrl: aws.String(queueUrl), // Required
@@ -74,7 +74,7 @@ func getQueueArn(queueUrl string) string {
 }
 
 func getQueuePolicy(queueUrl string) {
-	svc := sqs.New(session.New())
+	svc := sqs.New(ses)
 
 	params := &sqs.GetQueueAttributesInput{
 		QueueUrl: aws.String(queueUrl), // Required
