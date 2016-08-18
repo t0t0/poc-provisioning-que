@@ -6,11 +6,11 @@ import (
 )
 
 var endpoint = "unix:///var/run/docker.sock"
-var client, _ = docker.NewClient(endpoint)
+var docker_client, _ = docker.NewClient(endpoint)
 
-func main() {
+func test() {
 
-	container, err := client.CreateContainer(*dockeroptions())
+	container, err := docker_client.CreateContainer(*dockeroptions())
 
 	if err != nil {
 		// Print the error, cast err to awserr.Error to get the Code and
@@ -53,7 +53,7 @@ func dockeroptions() *docker.CreateContainerOptions {
 }
 
 func dockerstart(id string, hostConfig *docker.HostConfig) {
-	client.StartContainer(id, hostConfig)
+	docker_client.StartContainer(id, hostConfig)
 
 }
 
