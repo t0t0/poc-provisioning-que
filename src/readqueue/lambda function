@@ -1,25 +1,39 @@
-from __future__ import print_function
+'use strict';
+console.log('Loading function');
 
-import json
-import urllib
-import boto3
+let aws = require('aws-sdk');
+let s3 = new aws.S3({ apiVersion: '2006-03-01' });
+var sns = new aws.SNS();
+exports.handler = (event, context, callback) => {
+    //console.log('Received event:', JSON.stringify(event, null, 2));
 
-print('Loading function')
-
-s3 = boto3.client('s3')
-
-
-def lambda_handler(event, context):
-    #print("Received event: " + json.dumps(event, indent=2))
-
-    # Get the object from the event and show its content type
-    key = urllib.unquote_plus(event['Records'][0]['s3']['object']['key']).decode('utf8')
-    try:
-        sqs = boto3.resource('sqs')
-        queue = sqs.get_queue_by_name(QueueName='provision-queue')
-        queue.send_message(MessageBody=key)
-        return key
-    except Exception as e:
-        print(e)
-        print('Error getting object {} from bucket {}. Make sure they exist and your bucket is in the same region as this function.'.format(key, bucket))
-        raise e
+    // Get the object from the event and show its content type
+    const bucket = event.Records[0].s3.bucket.name;
+    const key = decodeURIComponent(event.Records[0].s3.object.key.replace(/\+/g, ' '));
+    const params = {
+        Bucket: bucket,
+        Key: key
+    };
+    s3.getObject(params, (err, data) => {
+        if (err) {
+            console.log(err);
+            const message = `Error getting object ${key} from bucket ${bucket}. Make sure they exist and your bucket is in the same region as this function.`;
+            console.log(message);
+            callback(message);
+        } else {
+            console.log(key);
+            sns.publish({
+         Message: key ,
+        TopicArn: 'arn:aws:sns:us-east-1:659527370395:provision'
+    }, function(err, data) {
+        if (err) {
+            console.log(err.stack);
+            return;
+        }
+        console.log('push sent');
+        console.log(data);
+        context.done(null, 'Function Finished!');
+    });
+        }
+    });
+};
