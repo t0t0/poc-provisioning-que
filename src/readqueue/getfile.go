@@ -16,10 +16,10 @@ func getFile(key string, handler string, queueUrl string) {
 	if isfile {
 		location := "./"
 		if whatfile == "config" {
-			location = config.Configdir + key
+			location = config.Configdir + "/" + key
 		}
 		if whatfile == "template" {
-			location = config.Templatesdir + key
+			location = config.Templatesdir + "/" + key
 		}
 
 		file, err := os.Create(location)
